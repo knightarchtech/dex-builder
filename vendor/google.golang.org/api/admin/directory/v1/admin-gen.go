@@ -1156,6 +1156,31 @@ func (s BatchDeletePrintersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BluetoothAdapterInfo: Information about a device's Bluetooth adapter.
+type BluetoothAdapterInfo struct {
+	// Address: Output only. The MAC address of the adapter.
+	Address string `json:"address,omitempty"`
+	// NumConnectedDevices: Output only. The number of devices connected to this
+	// adapter.
+	NumConnectedDevices int64 `json:"numConnectedDevices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BluetoothAdapterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BluetoothAdapterInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Building: Public API: Resources.buildings
 type Building struct {
 	// Address: The postal address of the building. See `PostalAddress`
@@ -1545,6 +1570,9 @@ type ChromeOsDevice struct {
 	AutoUpdateThrough string `json:"autoUpdateThrough,omitempty"`
 	// BacklightInfo: Output only. Contains backlight information for the device.
 	BacklightInfo []*BacklightInfo `json:"backlightInfo,omitempty"`
+	// BluetoothAdapterInfo: Output only. Information about bluetooth adapters of
+	// the device.
+	BluetoothAdapterInfo []*BluetoothAdapterInfo `json:"bluetoothAdapterInfo,omitempty"`
 	// BootMode: The boot mode for the device. The possible values are: *
 	// `Verified`: The device is running a valid version of the Chrome OS. * `Dev`:
 	// The devices's developer hardware switch is enabled. When booted, the device
@@ -1719,7 +1747,8 @@ type ChromeOsDevice struct {
 	OsUpdateStatus *OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 	// OsVersion: The Chrome device's operating system version.
 	OsVersion string `json:"osVersion,omitempty"`
-	// OsVersionCompliance: Output only. Compliance status of the OS version.
+	// OsVersionCompliance: Output only. Device policy compliance status of the OS
+	// version.
 	//
 	// Possible values:
 	//   "complianceUnspecified" - Compliance status unspecified.
@@ -10236,9 +10265,10 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 	return c
 }
 
-// Query sets the optional parameter "query": Query string search. Should be of
-// the form "". Complete documentation is at https:
-// //developers.google.com/admin-sdk/directory/v1/guides/search-groups
+// Query sets the optional parameter "query": Query string search. Contains one
+// or more search clauses, each with a field, operator, and value. For complete
+// documentation, go to Search for groups
+// (https://developers.google.com/workspace/admin/directory/v1/guides/search-groups).
 func (c *GroupsListCall) Query(query string) *GroupsListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -14058,13 +14088,13 @@ func (c *ResourcesCalendarsListCall) PageToken(pageToken string) *ResourcesCalen
 }
 
 // Query sets the optional parameter "query": String query used to filter
-// results. Should be of the form "field operator value" where field can be any
-// of supported fields and operators can be any of supported operations.
-// Operators include '=' for exact match, '!=' for mismatch and ':' for prefix
-// match or HAS match where applicable. For prefix match, the value should
-// always be followed by a *. Logical operators NOT and AND are supported (in
-// this order of precedence). Supported fields include `generatedResourceName`,
-// `name`, `buildingId`, `floor_name`, `capacity`,
+// results. Contains one or more search clauses, each with a field, operator,
+// and value. A field can be any of supported fields and operators can be any
+// of supported operations. Operators include '=' for exact match, '!=' for
+// mismatch and ':' for prefix match or HAS match where applicable. For prefix
+// match, the value should always be followed by a *. Logical operators NOT and
+// AND are supported (in this order of precedence). Supported fields include
+// `generatedResourceName`, `name`, `buildingId`, `floor_name`, `capacity`,
 // `featureInstances.feature.name`, `resourceEmail`, `resourceCategory`. For
 // example `buildingId=US-NYC-9TH AND featureInstances.feature.name:Phone`.
 func (c *ResourcesCalendarsListCall) Query(query string) *ResourcesCalendarsListCall {
@@ -18455,9 +18485,10 @@ func (c *UsersWatchCall) Projection(projection string) *UsersWatchCall {
 	return c
 }
 
-// Query sets the optional parameter "query": Query string search. Should be of
-// the form "". Complete documentation is at https:
-// //developers.google.com/admin-sdk/directory/v1/guides/search-users
+// Query sets the optional parameter "query": Query string search. Contains one
+// or more search clauses, each with a field, operator, and value. For complete
+// documentation, go to Search for users
+// (https://developers.google.com/workspace/admin/directory/v1/guides/search-users).
 func (c *UsersWatchCall) Query(query string) *UsersWatchCall {
 	c.urlParams_.Set("query", query)
 	return c
